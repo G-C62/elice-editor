@@ -1,35 +1,79 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import styled from 'styled-components';
+import { FileTree } from './FileTree/components/FileTree';
+import { FileUploadHandler } from './FileUploadHandler/components/FileUploadhandler';
+import { MonacoEditor } from './MonacoEditor/components/MonacoEditor';
+import { Tabs } from './Tabs/components/Tabs';
 
-function App() {
-  const [count, setCount] = useState(0)
+const AppContainer = styled.div`
+  width: 98vw;
+  height: 96vh;
+  margin: 1vw auto;
+  border: 3px solid black;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+`;
 
+const TopBar = styled.div`
+  border: 2px solid black;
+  padding: 1rem;
+`;
+
+const TabsBar = styled.div`
+  border: 2px solid black;
+`;
+
+const MainArea = styled.div`
+  flex: 1;
+  display: flex;
+  border: 2px solid black;
+`;
+
+const ContentArea = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid black;
+`;
+
+const FileTreeArea = styled.div`
+  width: 220px;
+  border-right: 2px solid black;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 500;
+`;
+
+const EditorArea = styled.div`
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 500;
+`;
+
+export default function App() {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <AppContainer>
+      <TopBar>
+        <FileUploadHandler />
+      </TopBar>
+      <MainArea>
+        <FileTreeArea>
+          <FileTree />
+        </FileTreeArea>
+        <ContentArea>
+          <TabsBar>
+            <Tabs />
+          </TabsBar>
+          <EditorArea>
+            <MonacoEditor />
+          </EditorArea>
+        </ContentArea>
+      </MainArea>
+    </AppContainer>
+  );
 }
-
-export default App
