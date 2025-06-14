@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import { FileTree } from './FileTree/components/FileTree';
-import { FileUploadHandler } from './FileUploadHandler/components/FileUploadhandler';
-import { MonacoEditor } from './MonacoEditor/components/MonacoEditor';
-import { Tabs } from './Tabs/components/Tabs';
+import { FileTree } from './domains/FileTree/components/FileTree';
+import { FileUploadHandler } from './domains/FileUploadHandler/components/FileUploadhandler';
+import { MonacoEditor } from './domains/MonacoEditor/components/MonacoEditor';
+import { Tabs } from './domains/Tabs/components/Tabs';
 
 const AppContainer = styled.div`
   width: 98vw;
