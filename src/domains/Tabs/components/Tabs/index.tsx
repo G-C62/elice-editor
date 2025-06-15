@@ -1,4 +1,5 @@
 import { tabsAtom } from '@/atoms/tabsAtom';
+import { useTabsActions } from '@/hooks/useTabsActions';
 import { useAtom } from 'jotai';
 import styled from 'styled-components';
 
@@ -35,15 +36,27 @@ const CloseButton = styled.button`
 
 export const Tabs = () => {
   const [tabs, setTabs] = useAtom(tabsAtom);
+  const { openOrActivateTab } = useTabsActions();
 
   const handleClose = (id: string) => {
-    setTabs(prev => prev.filter(tab => tab.id !== id));
+    setTabs(prev => {
+      const nextTabs = prev.filter(tab => tab.id !== id);
+      const hasOpened = nextTabs.some(tab => tab.isOpened);
+      if (!hasOpened && nextTabs.length > 0) {
+        return nextTabs.map((tab, idx) => (idx === 0 ? { ...tab, isOpened: true } : { ...tab, isOpened: false }));
+      }
+      return nextTabs;
+    });
+  };
+
+  const handleTabClick = (id: string, name: string) => {
+    openOrActivateTab({ id, name });
   };
 
   return (
     <TabsContainer>
       {tabs.map(tab => (
-        <Tab key={tab.id} active={tab.isOpened}>
+        <Tab key={tab.id} active={tab.isOpened} onClick={() => handleTabClick(tab.id, tab.name)}>
           {tab.name}
           <CloseButton
             onClick={e => {
