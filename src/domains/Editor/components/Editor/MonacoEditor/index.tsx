@@ -1,41 +1,18 @@
-import * as monaco from 'monaco-editor';
-import { useEffect, useRef } from 'react';
+import { useMonacoModel } from '@/domains/Editor/hooks/useMonacoModel';
+import { getLanguageFromFileName } from '@/domains/Editor/utils/editorUtils';
+import { useRef } from 'react';
 
 interface MonacoEditorProps {
   content: string;
+  fileName?: string; // 예: "index.ts", "main.py" 등
+  theme?: 'vs-dark' | 'vs-light';
 }
 
-export const MonacoEditor = ({ content }: MonacoEditorProps) => {
-  const editorRef = useRef<HTMLDivElement | null>(null);
-  const monacoInstance = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
+export const MonacoEditor = ({ content, fileName, theme = 'vs-light' }: MonacoEditorProps) => {
+  const editorRef = useRef<HTMLDivElement>(null);
+  const language = getLanguageFromFileName(fileName);
 
-  useEffect(() => {
-    if (editorRef.current && !monacoInstance.current) {
-      monacoInstance.current = monaco.editor.create(editorRef.current, {
-        value: content,
-        language: 'plaintext',
-        fontSize: 14,
-        minimap: { enabled: false },
-        wordWrap: 'on',
-        automaticLayout: true,
-      });
-    }
-    return () => {
-      monacoInstance.current?.dispose();
-      monacoInstance.current = null;
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (monacoInstance.current) {
-      const model = monacoInstance.current.getModel();
-      if (model) {
-        monaco.editor.setModelLanguage(model, 'plaintext');
-        monacoInstance.current.setValue(content);
-      }
-    }
-  }, [content]);
+  useMonacoModel(editorRef, content, language, theme);
 
   return <div ref={editorRef} style={{ width: '100%', height: '100%' }} />;
 };

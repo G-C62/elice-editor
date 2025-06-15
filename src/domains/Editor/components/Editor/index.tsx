@@ -12,7 +12,7 @@ export const Editor = () => {
 
   return (
     <div style={{ width: '100%', height: '100%' }}>
-      {openedTab ? <MonacoEditor content={content} /> : <div>No file selected</div>}
+      {openedTab ? <MonacoEditor content={content} fileName={openedTab.name} /> : <div>No file selected</div>}
     </div>
   );
 };
