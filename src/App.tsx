@@ -1,7 +1,7 @@
 import styled from 'styled-components';
+import { Editor } from './domains/Editor/components/Editor';
 import { FileTree } from './domains/FileTree/components/FileTree';
 import { FileUploadHandler } from './domains/FileUploadHandler/components/FileUploadhandler';
-import { MonacoEditor } from './domains/MonacoEditor/components/MonacoEditor';
 import { Tabs } from './domains/Tabs/components/Tabs';
 
 const AppContainer = styled.div`
@@ -67,7 +67,7 @@ export default function App() {
             <Tabs />
           </TabsBar>
           <EditorArea>
-            <MonacoEditor />
+            <Editor />
           </EditorArea>
         </ContentArea>
       </MainArea>
