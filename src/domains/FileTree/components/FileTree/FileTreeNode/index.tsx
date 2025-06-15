@@ -9,10 +9,10 @@ interface FileTreeNodeProps {
   onOpenTab: (file: { id: string; name: string }) => void;
 }
 
-const NodeContainer = styled.div<{ selected: boolean; depth: number }>`
+const NodeContainer = styled.div<{ selected: boolean; $depth: number }>`
   background: ${({ selected }) => (selected ? '#1976d2' : 'transparent')};
   color: ${({ selected }) => (selected ? 'white' : 'inherit')};
-  padding-left: ${({ depth }) => depth * 16}px;
+  padding-left: ${({ $depth }) => $depth * 16}px;
   font-family: monospace;
   font-size: 12px;
   cursor: pointer;
@@ -39,7 +39,7 @@ export function FileTreeNode({ node, depth = 0, selectedId, onSelect, onOpenTab 
   };
 
   return (
-    <NodeContainer selected={isSelected} depth={depth} onClick={handleClick} onDoubleClick={handleDoubleClick}>
+    <NodeContainer selected={isSelected} $depth={depth} onClick={handleClick} onDoubleClick={handleDoubleClick}>
       <span style={{ fontWeight: node.type === 'folder' ? 'bold' : 'normal' }}>
         {node.type === 'folder' ? '📁' : '📄'} {node.name}
       </span>

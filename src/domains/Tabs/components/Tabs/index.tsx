@@ -11,14 +11,14 @@ const TabsContainer = styled.div`
   align-items: center;
 `;
 
-const Tab = styled.div<{ active?: boolean }>`
+const Tab = styled.div<{ $active?: boolean }>`
   display: flex;
   align-items: center;
   padding: 0 1rem;
   height: 100%;
   border-right: 1px solid #dee2e6;
   cursor: pointer;
-  background: ${({ active }) => (active ? '#fff' : 'transparent')};
+  background: ${({ $active }) => ($active ? '#fff' : 'transparent')};
   position: relative;
 `;
 
@@ -56,7 +56,7 @@ export const Tabs = () => {
   return (
     <TabsContainer>
       {tabs.map(tab => (
-        <Tab key={tab.id} active={tab.isOpened} onClick={() => handleTabClick(tab.id, tab.name)}>
+        <Tab key={tab.id} $active={tab.isOpened} onClick={() => handleTabClick(tab.id, tab.name)}>
           {tab.name}
           <CloseButton
             onClick={e => {
