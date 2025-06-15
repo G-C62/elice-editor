@@ -6,7 +6,7 @@ import { useRef } from 'react';
 
 // FileNode 타입 정의
 type FileNode = {
-  id: string;
+  id: string; // zipEntry.name 전체 경로
   name: string;
   type: 'file' | 'folder';
   children?: FileNode[];
@@ -29,7 +29,7 @@ function buildFileTree(zip: JSZip): FileNode {
       if (!child) {
         const isFile = idx === parts.length - 1 && !zipEntry.dir;
         child = {
-          id: zipEntry.name + idx,
+          id: isFile ? zipEntry.name : parts.slice(0, idx + 1).join('/'),
           name: part,
           type: isFile ? 'file' : 'folder',
           ...(isFile ? {} : { children: [] }),
@@ -46,7 +46,7 @@ function buildFileTree(zip: JSZip): FileNode {
 // 파일 내용 해시 생성 함수
 async function buildFileContentMap(zip: JSZip, node: FileNode, map: { [id: string]: string }) {
   if (node.type === 'file') {
-    const zipEntry = zip.file(node.name);
+    const zipEntry = zip.file(node.id); // id가 전체 경로
     if (zipEntry) {
       map[node.id] = await zipEntry.async('string');
     }
@@ -78,7 +78,6 @@ export function FileUploadButton() {
       // 파일 내용 해시 생성
       const contentMap: { [id: string]: string } = {};
       await buildFileContentMap(zip, tree, contentMap);
-
       setFileTree(tree);
       setFileContent(contentMap);
     }
