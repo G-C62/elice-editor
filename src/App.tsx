@@ -40,10 +40,7 @@ const FileTreeArea = styled.div`
   width: 220px;
   border-right: 2px solid black;
   display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  font-size: 2rem;
-  font-weight: 500;
+  flex-direction: column;
 `;
 
 const EditorArea = styled.div`
