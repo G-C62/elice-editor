@@ -9,8 +9,6 @@ export const FileTree = () => {
     return <div style={{ color: '#888', fontStyle: 'italic' }}>No files</div>;
   }
 
-  console.log(fileTree);
-
   return (
     <>
       {fileTree.children.map(child => (
