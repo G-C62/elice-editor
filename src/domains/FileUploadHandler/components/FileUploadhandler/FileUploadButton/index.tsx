@@ -1,5 +1,6 @@
 import { fileContentAtom } from '@/atoms/fileContentAtom';
 import { fileTreeAtom } from '@/atoms/fileTreeAtom';
+import { tabsAtom } from '@/atoms/tabsAtom';
 import { useSetAtom } from 'jotai';
 import JSZip from 'jszip';
 import { useRef } from 'react';
@@ -63,6 +64,7 @@ export function FileUploadButton() {
   const inputRef = useRef<HTMLInputElement>(null);
   const setFileTree = useSetAtom(fileTreeAtom);
   const setFileContent = useSetAtom(fileContentAtom);
+  const setTabs = useSetAtom(tabsAtom);
 
   const handleUploadButtonClick = () => {
     inputRef.current?.click();
@@ -82,6 +84,7 @@ export function FileUploadButton() {
       await buildFileContentMap(zip, tree, contentMap);
       setFileTree(tree);
       setFileContent(contentMap);
+      setTabs([]);
     }
   };
 
