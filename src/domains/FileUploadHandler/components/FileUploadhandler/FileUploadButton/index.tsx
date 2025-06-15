@@ -46,9 +46,11 @@ function buildFileTree(zip: JSZip): FileNode {
 // 파일 내용 해시 생성 함수
 async function buildFileContentMap(zip: JSZip, node: FileNode, map: { [id: string]: string }) {
   if (node.type === 'file') {
-    const zipEntry = zip.file(node.id); // id가 전체 경로
+    const zipEntry = zip.file(node.id);
     if (zipEntry) {
-      map[node.id] = await zipEntry.async('string');
+      const ext = node.name.split('.').pop()?.toLowerCase();
+      const isImage = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp'].includes(ext ?? '');
+      map[node.id] = isImage ? await zipEntry.async('base64') : await zipEntry.async('string');
     }
   } else if (node.children) {
     for (const child of node.children) {
