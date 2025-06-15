@@ -20,6 +20,21 @@ const Tab = styled.div<{ $active?: boolean }>`
   cursor: pointer;
   background: ${({ $active }) => ($active ? '#fff' : 'transparent')};
   position: relative;
+  color: #1e1e1e;
+  font-size: 13px;
+  user-select: none;
+`;
+
+const TabTitle = styled.span`
+  display: flex;
+  align-items: center;
+  gap: 6px;
+`;
+
+const ModifiedDot = styled.span`
+  color: #1e1e1e;
+  font-size: 16px;
+  line-height: 1;
 `;
 
 const CloseButton = styled.button`
@@ -29,8 +44,17 @@ const CloseButton = styled.button`
   color: #888;
   font-size: 14px;
   cursor: pointer;
+  padding: 0 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+
   &:hover {
-    color: #d32f2f;
+    background: rgba(0, 0, 0, 0.1);
+    color: #1e1e1e;
   }
 `;
 
@@ -57,7 +81,10 @@ export const Tabs = () => {
     <TabsContainer>
       {tabs.map(tab => (
         <Tab key={tab.id} $active={tab.isOpened} onClick={() => handleTabClick(tab.id, tab.name)}>
-          {tab.name}
+          <TabTitle>
+            {tab.name}
+            {tab.isModified && <ModifiedDot>•</ModifiedDot>}
+          </TabTitle>
           <CloseButton
             onClick={e => {
               e.stopPropagation();
